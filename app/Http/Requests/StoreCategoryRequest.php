@@ -3,21 +3,24 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 class StoreCategoryRequest extends FormRequest
 {
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
-    public function rules(): array
+    protected function prepareForValidation()
     {
-        return [
-            'name' => 'required|string|unique:categories,name|max:255',
-        ];
+        $input = $this->all();
+        array_walk($input, function (&$val) {
+            if (is_string($val)) {
+                $val = trim(strip_tags($val));
+            }
+        });
+        $this->merge($input);
     }
-    public function messages(): array
+    public function rules()
     {
         return [
-            'name.required' => 'Nama kategori wajib diisi.',
-            'name.unique' => 'Nama kategori sudah ada.',
+            "name" => "required|string|max:255",
         ];
     }
 }
