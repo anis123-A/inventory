@@ -13,10 +13,11 @@ class ItemController extends BaseController
         $this->svc = $svc;
     }
     public function index(Request $request) {
-        $items = $this->svc->all()->filter(fn($item) =>
-            !$request->category_id || $item->category_id == $request->category_id
-        );
-        return $this->success($items->values());
+    $items = $this->svc->all()->filter(fn($item) =>
+        !$request->category_id
+        || (is_numeric($request->category_id) && $item->category_id == $request->category_id)
+    );
+    return $this->success($items->values());
     }
     public function store(StoreItemRequest $req){
         $item = $this->svc->create($req->validated());
