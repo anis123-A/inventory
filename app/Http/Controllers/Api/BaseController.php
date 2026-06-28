@@ -7,14 +7,14 @@ class BaseController extends Controller
     /**
      * Response Wrapper untuk kondisi sukses
      */
-    protected function success($data = null, $message = null, $code = 200): JsonResponse
-    {
-        return response()->json([
-            'success' => true,
-            'message' => $message,
-            'data'    => $data,
-        ], $code);
-    }
+    // Contoh isi fungsi success di BaseController
+public function success($data, $message = "Success", $code = 200) {
+    return response()->json([
+        'status' => true, // Pastikan key ini ada
+        'message' => $message,
+        'data' => $data
+    ], $code);
+}
     /**
      * Response Wrapper untuk kondisi error
      */

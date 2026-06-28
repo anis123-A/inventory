@@ -12,8 +12,8 @@ Route::prefix('v1')->group(function() {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
 
-    // Rute Terproteksi (Harus melalui auth Sanctum)
-    Route::middleware('auth:sanctum')->group(function() {
+    // Rute Terproteksi (Harus melalui auth Sanctum & Rate Limited)
+    Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function() {
         
         // Rute Manajemen Kategori
         Route::apiResource('categories', CategoryController::class)->except(['destroy']); 
